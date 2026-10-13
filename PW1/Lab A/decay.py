@@ -16,7 +16,6 @@ import numpy as np
 
 
 def simulate_loop(N0, lam, dt=0.05, steps=200, seed=0):
-    """Radioactive decay, pure-Python loop version (slow)."""
     if lam < 0:
         raise ValueError("lam must be >= 0")
     rng = np.random.default_rng(seed)
@@ -33,7 +32,6 @@ def simulate_loop(N0, lam, dt=0.05, steps=200, seed=0):
 
 
 def simulate(N0, lam, dt=0.05, steps=200, seed=0):
-    """Radioactive decay, vectorised NumPy version (fast)."""
     if lam < 0:
         raise ValueError("lam must be >= 0")
     rng = np.random.default_rng(seed)
