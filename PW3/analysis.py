@@ -7,7 +7,7 @@ from scipy.stats import shapiro, mannwhitneyu, pearsonr
 
 # SESSION 1
 
-print("--- SESSION 1: Data Shape & Head ---")
+print("--- Data shape & head ---")
 df_heart = pd.read_csv("heart.csv")
 print("Shape:", df_heart.shape)
 print(df_heart.head())
@@ -32,7 +32,7 @@ for col in cols:
 
 # SESSION 2
 
-print("\n--- SESSION 2: Heart Disease vs Max Heart Rate (thalach) ---")
+print("\n--- Heart disease vs Max heart rate (thalach) ---")
 healthy = df_heart[df_heart['target'] == 0]['thalach']
 disease = df_heart[df_heart['target'] == 1]['thalach']
 
@@ -61,7 +61,7 @@ plt.title(f"Age vs Max Heart Rate (r = {corr:.2f})")
 plt.savefig("age_thalach.png")
 print("Saved age_thalach.png")
 
-print("\n--- Chemical Mystery ---")
+print("\n--- chemical mystery ---")
 df_chem = pd.read_csv("chemicals_cancer.csv")
 corr_b, _ = pearsonr(df_chem['benzene'], df_chem['malignancy'])
 corr_c, _ = pearsonr(df_chem['cadmium'], df_chem['malignancy'])
@@ -75,5 +75,5 @@ print("\nAfter controlling for pollution (index 45-55):")
 print(f"Subset Benzene-Malignancy: {corr_b_sub:.4f}")
 print(f"Subset Cadmium-Malignancy: {corr_c_sub:.4f}")
 
-print("\n--- Bonus ---")
+print("\n--- bonus ---")
 print(df_heart['target'].value_counts(normalize=True))

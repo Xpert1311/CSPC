@@ -70,3 +70,27 @@ Lab B - Optimization in Chemistry
 - **Naive Analysis:** Initially, both chemicals appeared linked to malignancy, but `cadmium` showed a significantly stronger correlation ($0.88$) than `benzene` ($0.38$). At face value, Cadmium looked like the primary cause.
 - **The Reality (Controlling for Confounders):** I restricted the dataset to patients with a similar `pollution_index` (between 45 and 55) to eliminate the confounding effect of general pollution. In this isolated group, the correlation between `cadmium` and `malignancy` dropped entirely to $0.0$, while the correlation for `benzene` increased to $0.65$.
 - **Conclusion:** **Benzene** is the true chemical driver of malignancy. Cadmium only appeared guilty because it strongly co-occurs in highly polluted areas (the third variable), creating a false correlation with cancer rates.
+
+
+
+
+## PW4 - Machine Learning Workflow
+
+### Session A: Concrete Strength (Supervised)
+**A2. Duplicates:** 
+A duplicated row means the same exact observation appears twice. If we don't drop duplicates before splitting, one copy might end up in the training set and the identical copy in the test set. This allows the model to "cheat" and artificially inflates the test score because it has already seen the exact answer.
+
+**A4. Linear Regression Residuals:**
+When plotting residuals against age (on a log scale), if there is a systematic pattern (e.g., all errors at a specific age are positive or negative), it implies the linear model is failing to capture a non-linear relationship. A good model should have residuals randomly scattered around zero.
+
+**A5. Polynomial Regression Degree Choice:**
+- At **Degree 4**, the number of features expands dramatically. The Train $R^2$ becomes almost perfect (close to 1.0), but the Test $R^2$ plummets or even turns negative. This is a classic case of **overfitting**: the model has memorized the training data's noise because there are almost as many features as training rows.
+- Adjusted $R^2$ helps penalize adding useless features, but it alone cannot fully protect you from catastrophic overfitting at Degree 4. 
+- **Chosen Degree:** Degree 2 or 3 is optimal, as it increases test performance without extreme overfitting.
+
+**A6. Classification Threshold & Mistakes:**
+On a construction site, a **False Positive (FP)** is the most dangerous mistake. An FP means the model predicted the concrete would reach 40 MPa, but in reality, it did not. This could lead to a structural collapse. Therefore, we must control **Precision** (to minimize false positives). 
+To get a safer (higher) precision, we must raise the classification threshold from 0.5 to something like 0.7 or 0.8. The trade-off (what we pay) is that we will get a lower **Recall**—we will reject many concrete mixes that actually were strong enough.
+
+**A8. Feature Importance vs Physics:**
+Standardized coefficients show the effect of changing an input by 1 standard deviation, making them comparable, unlike raw coefficients which are tied to differing units (days vs kg/m³). The models agree that `age` and `cement` are critical features. This exactly matches Abrams' law: strength is primarily dictated by the water-to-cement ratio and curing time. However, a high statistical importance does not guarantee causation; it just means the model relies on that feature to split the data.
